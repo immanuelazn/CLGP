@@ -1,0 +1,8 @@
+einops
+transformers==4.29.2
+peft
+omegaconf
+evaluate
+accelerate
+scikit-learn
+ete3

@@ -1,0 +1,24 @@
+FROM pytorch/pytorch:2.1.0-cuda11.8-cudnn8-runtime
+#RUN pip install gensim tensorflow-text==2.14.0-rc0 pydot tensorflow-datasets nltk scipy scikit-learn pandas sentencepiece transformers graphviz seaborn torch torchvision omegaconf
+# Get DNABERT requirements
+COPY requirements_dnabert.txt /tmp/
+RUN  pip install --no-cache-dir -r /tmp/requirements_dnabert.txt
+#RUN  pip install -U --no-cache-dir triton==2.0.0.dev20221202
+
+# For Lavis caching
+RUN mkdir -p /export/home/.cache/lavis/
+
+# Get Flash-Attn
+#RUN apt-get update  && apt-get install git -y
+#COPY flash-attention-main /tmp/flash-attention-main
+# RUN python3 -m pip install --no-cache-dir packaging ninja
+#RUN cd /tmp/flash-attention-main && MAX_JOBS=6 python setup.py install
+#RUN MAX_JOBS=4 pip install flash-attn --no-build-isolation
+
+#COPY ../lavis/datasets/coco/images /export/home/.cache/lavis/coco/images/
+# Get jupyter and set up
+RUN python3 -m pip install --no-cache-dir notebook
+CMD ["sh"]
+#CMD ["jupyter notebook --notebook-dir=/tf --ip 0.0.0.0 --no-browser --allow-root"]
+#CMD ["bash" "-c" "source /etc/bash.bashrc && jupyter notebook --notebook-dir=/tf --ip 0.0.0.0 --no-browser --allow-root"]
+EXPOSE 8888
